@@ -51,12 +51,17 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: Echo Test
+        run: |
+          echo "Echo Test"
+          echo $TEST_SECRET
+          echo $TEST_ENV_VAR_NAME
+          echo ${{ secrets.TEST_SECRET_NAME }}
+          echo ${{ vars.TEST_ENV_VAR_NAME }}
+
       - name: Install Dependencies
         run: |
           echo "Install Dependencies"
-          echo $TEST_SECRET
-          echo $TEST_ENV_VAR_NAME
-          echo ${{ vars.TEST_ENV_VAR_NAME }}
           python -m pip install --upgrade pip
           pip install -r ../requirements.txt
 
