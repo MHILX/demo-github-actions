@@ -58,4 +58,4 @@ jobs:
       - name: Run Unit Test
         run: |
           echo "---Unit Test---"
-          py -m unittest discover
+          python -m unittest discover
