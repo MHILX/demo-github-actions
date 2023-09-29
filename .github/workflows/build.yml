@@ -1,0 +1,61 @@
+name: Build Codebase
+
+on: 
+  push:
+    #branches-ignore: [release*]
+    branches:
+      - 'feature/*'
+      - 'bugfix/*'
+      - 'hotfix/*'
+      - 'release/*'
+      - 'main'
+      - 'master'
+  pull_request:
+    branches: [master, main, 'release/*']
+ 
+jobs:
+  super-linter:
+    name: Lint Codebase
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Lint Code Base
+        uses: super-linter/super-linter@v5
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  unit-test:
+    name: Unit Test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app/
+    strategy:
+      matrix:
+        python-version: [3.11]
+    env:
+      MODE: "dev"
+      PYTHON_VERSION: ${{ matrix.python-version }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Dependencies
+        run: |
+          echo "Install Dependencies"
+          python -m pip install --upgrade pip
+          pip install -r ../requirements.txt
+
+      - name: Run Unit Test
+        run: |
+          echo "---Unit Test---"
+          py -m unittest discover
