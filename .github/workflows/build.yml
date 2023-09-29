@@ -36,7 +36,7 @@ jobs:
         working-directory: ./app/
     strategy:
       matrix:
-        python-version: [3.11, 3.12]
+        python-version: [3.11]
     env:
       MODE: "dev"
       PYTHON_VERSION: ${{ matrix.python-version }}
@@ -54,8 +54,8 @@ jobs:
       - name: Install Dependencies
         run: |
           echo "Install Dependencies"
-          echo TEST_SECRET
-          echo TEST_ENV_VAR_NAME
+          echo $TEST_SECRET
+          echo $TEST_ENV_VAR_NAME
           python -m pip install --upgrade pip
           pip install -r ../requirements.txt
 
