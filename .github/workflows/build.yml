@@ -40,6 +40,8 @@ jobs:
     env:
       MODE: "dev"
       PYTHON_VERSION: ${{ matrix.python-version }}
+      TEST_SECRET: ${{ secrets.TEST_SECRET_NAME }}
+      TEST_ENV_VAR_NAME: ${{ vars.TEST_ENV_VAR_NAME }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -52,6 +54,8 @@ jobs:
       - name: Install Dependencies
         run: |
           echo "Install Dependencies"
+          echo TEST_SECRET
+          echo TEST_ENV_VAR_NAME
           python -m pip install --upgrade pip
           pip install -r ../requirements.txt
 
