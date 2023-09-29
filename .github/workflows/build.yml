@@ -56,6 +56,7 @@ jobs:
           echo "Install Dependencies"
           echo $TEST_SECRET
           echo $TEST_ENV_VAR_NAME
+          echo ${{ vars.TEST_ENV_VAR_NAME }}
           python -m pip install --upgrade pip
           pip install -r ../requirements.txt
 
