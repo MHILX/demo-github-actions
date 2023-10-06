@@ -60,6 +60,7 @@ jobs:
           echo ${{ secrets.TEST_SECRET_NAME }}
           echo ${{ vars.TEST_ENV_VAR_NAME }}
           echo "variable from shell environment : $TEST_ENV_VAR_NAME"
+          
       - name: Install Dependencies
         run: |
           echo "Install Dependencies"
@@ -70,3 +71,31 @@ jobs:
         run: |
           echo "---Unit Test---"
           python -m unittest discover
+
+  deploy-dev:
+    name: Deploy to Dev
+    runs-on: ubuntu-latest
+    needs: [unit-test]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Dev
+        run: |
+          echo "Deploy to Dev"
+          echo "Deploying to Dev"
+          echo "Deployed to Dev"
+
+  deploy-qa:
+    name: Deploy to QA
+    runs-on: ubuntu-latest
+    needs: [unit-test, deploy-dev]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Deploy to QA
+        run: |
+          echo "Deploy to QA"
+          echo "Deploying to QA"
+          echo "Deployed to QA"
