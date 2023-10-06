@@ -1,4 +1,4 @@
-name: Build Codebase
+name: Build & Deploy Codebase
 
 on: 
   push:
@@ -31,6 +31,7 @@ jobs:
   unit-test:
     name: Unit Test
     runs-on: ubuntu-latest
+    needs: [super-linter]
     defaults:
       run:
         working-directory: ./app/
@@ -75,6 +76,7 @@ jobs:
   deploy-dev:
     name: Deploy to Dev
     runs-on: ubuntu-latest
+    environment: dev
     needs: [unit-test]
     steps:
       - name: Checkout Code
@@ -89,6 +91,7 @@ jobs:
   deploy-qa:
     name: Deploy to QA
     runs-on: ubuntu-latest
+    environment: qa
     needs: [unit-test, deploy-dev]
     steps:
       - name: Checkout Code
@@ -99,3 +102,18 @@ jobs:
           echo "Deploy to QA"
           echo "Deploying to QA"
           echo "Deployed to QA"
+
+  deploy-prod:
+    name: Deploy to Prod
+    runs-on: ubuntu-latest
+    environment: prod
+    needs: [unit-test, deploy-dev, deploy-qa]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Prod
+        run: |
+          echo "Deploy to Prod"
+          echo "Deploying to Prod"
+          echo "Deployed to Prod"
