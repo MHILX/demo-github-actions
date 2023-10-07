@@ -74,7 +74,9 @@ jobs:
   deploy-dev:
     name: Deploy to Dev
     runs-on: ubuntu-latest
-    environment: dev
+    environment:
+      name: dev
+      url: https://dev.example.com
     needs: [unit-test]
     steps:
       - name: Checkout Code
@@ -90,7 +92,9 @@ jobs:
     name: Deploy to QA
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
-    environment: qa
+    environment:
+      name: qa
+      url: https://qa.example.com
     needs: [unit-test, deploy-dev]
     steps:
       - name: Checkout Code
@@ -106,7 +110,9 @@ jobs:
     name: Deploy to UAT
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
-    environment: uat
+    environment:
+      name: uat
+      url: https://uat.example.com
     needs: [unit-test, deploy-dev]
     steps:
       - name: Checkout Code
@@ -122,7 +128,9 @@ jobs:
     name: Deploy to Prod
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
-    environment: prod
+    environment: 
+      name: prod
+      url: https://prod.example.com
     needs: [unit-test, deploy-dev, deploy-qa, deploy-uat]
     steps:
       - name: Checkout Code
