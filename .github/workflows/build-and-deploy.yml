@@ -8,8 +8,6 @@ on:
       - 'bugfix/*'
       - 'hotfix/*'
       - 'release/*'
-      - 'main'
-      - 'master'
   pull_request:
     branches: [master, main, 'release/*']
  
