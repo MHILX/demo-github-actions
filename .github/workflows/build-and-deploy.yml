@@ -102,9 +102,26 @@ jobs:
           echo "Deploying to QA"
           echo "Deployed to QA"
 
+  deploy-uat:
+    name: Deploy to UAT
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    environment: uat
+    needs: [unit-test, deploy-dev]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Deploy to UAT
+        run: |
+          echo "Deploy to UAT"
+          echo "Deploying to UAT"
+          echo "Deployed to UAT"
+
   deploy-prod:
     name: Deploy to Prod
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     environment: prod
     needs: [unit-test, deploy-dev, deploy-qa]
     steps:
