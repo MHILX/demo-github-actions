@@ -11,19 +11,19 @@ on:
       - 'release/*'
  
 jobs:
-  echo-test:
-    name: Test
+  branch-check:
+    name: Branch Check
     runs-on: ubuntu-latest
+    if: ${{ !startsWith(github.ref, 'refs/heads/feature/') }}
     steps:    
       - name: Test
         run: |
-          echo "Hello World"
-          echo "Testing"
+          echo "This step will not run on 'feature/*' branches"
   
   unit-test:
     name: Unit Test
     runs-on: ubuntu-latest
-    needs: [echo-test]
+    needs: [branch-check]
     defaults:
       run:
         working-directory: ./app/
