@@ -1,11 +1,9 @@
 name: Build & Deploy Codebase
 
 on: 
-  # push:
-  #   branches:
-  #     - 'feature/*'
-  #     - 'bugfix/*'
-  #     - 'hotfix/*'
+  push:
+    branches-ignore:
+      - '**'
   pull_request:
     branches: [master, main, 'release/*']
  
