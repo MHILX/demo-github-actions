@@ -1,4 +1,4 @@
-name: Build & Deploy Codebase
+name: Analyze Codebase
 
 on: 
   push:
