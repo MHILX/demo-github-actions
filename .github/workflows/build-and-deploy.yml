@@ -23,6 +23,7 @@ jobs:
   unit-test:
     name: Unit Test
     runs-on: ubuntu-latest
+    if: ${{ success() }}
     needs: [branch-check]
     defaults:
       run:
