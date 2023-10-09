@@ -46,13 +46,7 @@ jobs:
 
       - name: Echo Test
         run: |
-          echo "Echo Test"
-          echo  running ${{ vars.JOB_NAME }}
-          echo $TEST_SECRET
-          echo $TEST_ENV_VAR_NAME
-          echo ${{ secrets.TEST_SECRET_NAME }}
-          echo ${{ vars.TEST_ENV_VAR_NAME }}
-          echo "variable from shell environment : $TEST_ENV_VAR_NAME"
+          echo "Echo Test"         
           
       - name: Install Dependencies
         run: |

@@ -2,6 +2,7 @@
 [![GitHub Super-Linter](https://github.com/super-linter/super-linter/actions/workflows/ci.yml/badge.svg)](https://github.com/marketplace/actions/super-linter)
 
 ---
+
 ## Reusable Workflows
 Reusable workflows are standalone workflow files that can be reused across multiple repositories or workflows within the same repository. They are defined as separate YAML files and can be triggered by events or manually called by other workflows.
 
@@ -115,12 +116,13 @@ If your test files are located in a specific directory, you can specify the dire
 ```shell
 python -m unittest discover -s tests
 ```
+
 Replace `tests` with the actual directory name where your unit test files reside.
 
 The unittest framework will execute all the unit tests it finds and provide output indicating the success or failure of each test case.
 
-
 ---
+
 ## Project dependencies
 - flask
 - python-dotenv
