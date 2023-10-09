@@ -5,7 +5,10 @@ on:
     branches-ignore:
       - '**'
   pull_request:
-    branches: [master, main, 'release/*']
+    branches:
+      - master
+      - main
+      - 'release/*'
  
 jobs:
   echo-test:
