@@ -46,7 +46,8 @@ jobs:
 
       - name: Echo Test
         run: |
-          echo "Echo Test"         
+          echo "Echo Test"
+          echo  running ${{ vars.JOB_NAME }}
           
       - name: Install Dependencies
         run: |
