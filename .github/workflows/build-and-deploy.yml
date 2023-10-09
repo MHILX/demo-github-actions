@@ -19,6 +19,7 @@ jobs:
       - name: Test
         run: |
           echo "This step will not run on 'feature/*' branches"
+          echo "github.ref: ${{github.ref}}"
   
   unit-test:
     name: Unit Test
