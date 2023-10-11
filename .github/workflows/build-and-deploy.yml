@@ -44,6 +44,7 @@ jobs:
         run: |
           echo "SOME_OTHER_VALUE=New Value" >> $GITHUB_ENV
           echo $SOME_OTHER_VALUE
+          echo ${{ env.SOME_OTHER_VALUE }}
   branch-check:
     name: Branch Check
     runs-on: ubuntu-latest
