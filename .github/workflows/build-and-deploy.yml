@@ -18,7 +18,7 @@ jobs:
   branch-check:
     name: Branch Check
     runs-on: ubuntu-latest
-    if: ${{ !startsWith(github.head_ref, 'refs/heads/feature/') }}
+    if: ${{ !startsWith(github.head_ref, 'feature/') }}
     steps:
       - name: Print Variables
         run: |
