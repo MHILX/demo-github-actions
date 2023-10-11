@@ -15,10 +15,9 @@ env:
   TEST_ENV_VAR_NAME: ${{ secrets.TEST_ENV_VAR_NAME }}
 
 jobs:
-  branch-check:
-    name: Branch Check
+  print-variables:
+    name: Print Variables
     runs-on: ubuntu-latest
-    if: ${{ !startsWith(github.head_ref, 'feature/') }}
     steps:
       - name: Print Variables
         run: |
@@ -33,6 +32,13 @@ jobs:
           echo "GITHUB_ACTOR: $GITHUB_ACTOR"
           echo "GITHUB_EVENT_NAME: $GITHUB_EVENT_NAME"
           echo "GITHUB_EVENT_PATH: $GITHUB_EVENT_PATH"
+          branch_name=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}} >> $GITHUB_OUTPUT
+          echo "Branch name: $branch_name"
+  branch-check:
+    name: Branch Check
+    runs-on: ubuntu-latest
+    if: ${{ !startsWith(github.head_ref, 'feature/') }}
+    steps:      
       - name: Extract branch name
         run: |        
           branch_name=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}} >> $GITHUB_OUTPUT
