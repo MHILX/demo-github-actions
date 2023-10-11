@@ -16,12 +16,11 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ !startsWith(github.ref, 'refs/heads/feature/') }}
     steps:    
-      - name: Test
+      - name: Get Branch Name
         run: |
           echo "This step will not run on 'feature/*' branches"          
-          echo "github.ref: ${{github.ref}}"
-          branch_name=$(echo ${{ github.ref }} | awk -F'/' '{print $3}')
-          echo $branch_name
+          branch_name=${GITHUB_REF#refs/heads/}
+          echo "Branch name: $branch_name"
   
   unit-test:
     name: Unit Test
