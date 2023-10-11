@@ -37,7 +37,7 @@ jobs:
           echo $SOME_OTHER_VALUE
           branch_name=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}} >> $GITHUB_OUTPUT
           echo "Branch name: $branch_name"
-          echo "output_name=output_value" >> $GITHUB_OUTPUT
+          echo "output_name=Helloooo" >> $GITHUB_OUTPUT
       - name: Get the output
         run: echo "The output was ${{ steps.print_variables.outputs.output_name }}"
       - name: Update environment variable
