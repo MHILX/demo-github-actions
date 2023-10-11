@@ -2,36 +2,68 @@ name: Build & Deploy Codebase
 
 on: 
   push:
-    #branches-ignore: [release*]
-    branches:
-      - 'feature/*'
-      - 'bugfix/*'
-      - 'hotfix/*'
-      - 'release/*'
-      - 'main'
-      - 'master'
+    branches-ignore:
+      - '**'
   pull_request:
-    branches: [master, main, 'release/*']
- 
+    branches:
+      - master
+      - main
+      - 'release/*'
+
+env:
+  SOME_VALUE: Hello World
+  SOME_OTHER_VALUE: Hello World!!!
 jobs:
-  super-linter:
-    name: Lint Codebase
+  print-variables:
+    name: Print Variables
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Lint Code Base
-        uses: super-linter/super-linter@v5
-        env:
-          VALIDATE_ALL_CODEBASE: false
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+      - name: Print Variables
+        id: print_variables
+        run: |
+          echo "GITHUB_HEAD_REF: $GITHUB_HEAD_REF"
+          echo "GITHUB_REF: $GITHUB_REF"
+          echo "GITHUB_BASE_REF: $GITHUB_BASE_REF"
+          echo "GITHUB_HEAD_SHA: $GITHUB_HEAD_SHA"
+          echo "GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
+          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+          echo "GITHUB_WORKFLOW: $GITHUB_WORKFLOW"
+          echo "GITHUB_ACTION: $GITHUB_ACTION"
+          echo "GITHUB_ACTOR: $GITHUB_ACTOR"
+          echo "GITHUB_EVENT_NAME: $GITHUB_EVENT_NAME"
+          echo "GITHUB_EVENT_PATH: $GITHUB_EVENT_PATH"
+          echo "--------------------------------------"
+          echo $SOME_VALUE
+          echo $SOME_OTHER_VALUE
+          branch_name=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}} >> $GITHUB_OUTPUT
+          echo "Branch name: $branch_name"
+          echo "output_name=Helloooo" >> $GITHUB_OUTPUT
+      - name: Get the output
+        run: echo "The output was ${{ steps.print_variables.outputs.output_name }}"
+      - name: Update environment variable
+        run: |
+          echo "SOME_OTHER_VALUE=New Value" >> $GITHUB_ENV
+          echo $SOME_OTHER_VALUE
+          echo ${{ env.SOME_OTHER_VALUE }}
+  branch-check:
+    name: Branch Check
+    runs-on: ubuntu-latest
+    if: ${{ !startsWith(github.head_ref, 'feature/') }}
+    steps:      
+      - name: Extract branch name
+        run: |        
+          branch_name=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}} >> $GITHUB_OUTPUT
+          echo "Branch name: $branch_name"
+        id: extract_branch_step
+      - name: Get Branch Name
+        run: |
+          echo "This step will not run on 'feature/*' branches"
+          echo "Branch name: ${{steps.extract_branch_step.outputs.branch_name}}"        
   unit-test:
     name: Unit Test
     runs-on: ubuntu-latest
-    needs: [super-linter]
+    if: ${{ success() }}
+    needs: [branch-check]
     defaults:
       run:
         working-directory: ./app/
@@ -56,11 +88,6 @@ jobs:
         run: |
           echo "Echo Test"
           echo  running ${{ vars.JOB_NAME }}
-          echo $TEST_SECRET
-          echo $TEST_ENV_VAR_NAME
-          echo ${{ secrets.TEST_SECRET_NAME }}
-          echo ${{ vars.TEST_ENV_VAR_NAME }}
-          echo "variable from shell environment : $TEST_ENV_VAR_NAME"
           
       - name: Install Dependencies
         run: |
@@ -76,7 +103,9 @@ jobs:
   deploy-dev:
     name: Deploy to Dev
     runs-on: ubuntu-latest
-    environment: dev
+    environment:
+      name: dev
+      url: https://dev.example.com
     needs: [unit-test]
     steps:
       - name: Checkout Code
@@ -92,7 +121,9 @@ jobs:
     name: Deploy to QA
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
-    environment: qa
+    environment:
+      name: qa
+      url: https://qa.example.com
     needs: [unit-test, deploy-dev]
     steps:
       - name: Checkout Code
@@ -104,11 +135,32 @@ jobs:
           echo "Deploying to QA"
           echo "Deployed to QA"
 
+  deploy-uat:
+    name: Deploy to UAT
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: uat
+      url: https://uat.example.com
+    needs: [unit-test, deploy-dev]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Deploy to UAT
+        run: |
+          echo "Deploy to UAT"
+          echo "Deploying to UAT"
+          echo "Deployed to UAT"
+
   deploy-prod:
     name: Deploy to Prod
     runs-on: ubuntu-latest
-    environment: prod
-    needs: [unit-test, deploy-dev, deploy-qa]
+    if: github.ref == 'refs/heads/main'
+    environment: 
+      name: prod
+      url: https://prod.example.com
+    needs: [unit-test, deploy-dev, deploy-qa, deploy-uat]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
