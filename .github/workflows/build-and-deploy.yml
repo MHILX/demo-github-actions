@@ -12,7 +12,7 @@ on:
 
 env:
   GITHUB_OUTPUT: ${{ github.workspace }}/output.txt
-  TEST_ENV_VAR_NAME: ${{ secrets.TEST_ENV_VAR_NAME }}
+  SOME_VALUE: Hello World
 
 jobs:
   print-variables:
@@ -20,6 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print Variables
+        id: print_variables
         run: |
           echo "GITHUB_HEAD_REF: $GITHUB_HEAD_REF"
           echo "GITHUB_REF: $GITHUB_REF"
@@ -32,8 +33,12 @@ jobs:
           echo "GITHUB_ACTOR: $GITHUB_ACTOR"
           echo "GITHUB_EVENT_NAME: $GITHUB_EVENT_NAME"
           echo "GITHUB_EVENT_PATH: $GITHUB_EVENT_PATH"
+          echo "--------------------------------------"
+          echo $SOME_VALUE
+          echo {{ env.SOME_VALUE }}
           branch_name=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}} >> $GITHUB_OUTPUT
           echo "Branch name: $branch_name"
+          echo "::set-output name=myOutput::Hello, World!"
   branch-check:
     name: Branch Check
     runs-on: ubuntu-latest
