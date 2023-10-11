@@ -19,7 +19,7 @@ jobs:
       - name: Get Branch Name
         run: |
           echo "This step will not run on 'feature/*' branches"          
-          branch_name=${GITHUB_REF#refs/heads/}
+          branch_name=${{ github.event.ref }}
           echo "Branch name: $branch_name"
   
   unit-test:
