@@ -1,5 +1,5 @@
 # Default reviewers for code in the repo.
-* @MHILX mohammed.hoque@intelex.com
+* @MHILX
 
 # You can assign owners for specific file patterns, directories, or even use wildcards.
 *.js    @js-owner
