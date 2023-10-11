@@ -1,7 +1,8 @@
-# Each line is a file pattern followed by one or more owners.
+# Default reviewers for code in the repo.
 * @MHILX mohammed.hoque@intelex.com
 
 # You can assign owners for specific file patterns, directories, or even use wildcards.
 *.js    @js-owner
-*.go    docs@example.com
+*.py    mohammed.hoque@intelex.com
+*.ts    mohammed.hoque@intelex.com
 /docs/  @doctocat
