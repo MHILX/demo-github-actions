@@ -19,7 +19,7 @@ jobs:
       - name: Get Branch Name
         run: |
           echo "This step will not run on 'feature/*' branches"          
-          echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+          echo "branch_name=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
           echo "Branch name: $branch_name"
         id: extract_branch
   unit-test:
