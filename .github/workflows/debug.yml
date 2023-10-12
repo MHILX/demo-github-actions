@@ -5,6 +5,10 @@ on:
     branches:
       - '**'
 
+env:
+  SOME_VALUE: Hello World
+  SOME_OTHER_VALUE: Hello World!!!
+
 jobs:
     print-variables:
         name: Print Variables

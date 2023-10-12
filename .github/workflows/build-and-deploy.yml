@@ -10,9 +10,6 @@ on:
       - main
       - 'release/*'
 
-env:
-  SOME_VALUE: Hello World
-  SOME_OTHER_VALUE: Hello World!!!
 jobs:  
   branch-check:
     name: Branch Check
