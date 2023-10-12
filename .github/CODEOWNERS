@@ -1,8 +1,2 @@
 # Default reviewers for code in the repo.
-* @MHILX
-
-# You can assign owners for specific file patterns, directories, or even use wildcards.
-*.js    @js-owner
-*.py    mohammed.hoque@intelex.com
-*.ts    mohammed.hoque@intelex.com
-/docs/  @doctocat
+* @MHILX @LiteObject
