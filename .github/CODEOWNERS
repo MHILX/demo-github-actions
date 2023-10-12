@@ -1,6 +1,2 @@
-# Each line is a file pattern followed by one or more owners.
-* @MHILX
-
-# You can assign owners for specific file patterns, directories, or even use wildcards.
-*.ts    mohammed.hoque@intelex.com
-/docs/  mohammed.hoque@intelex.com
+# Default reviewers for code in the repo.
+* @MHILX @LiteObject
