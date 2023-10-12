@@ -2,6 +2,5 @@
 * @MHILX
 
 # You can assign owners for specific file patterns, directories, or even use wildcards.
-*.js    @js-owner
-*.go    mohammed.hoque@intelex.com
+*.ts    mohammed.hoque@intelex.com
 /docs/  mohammed.hoque@intelex.com
