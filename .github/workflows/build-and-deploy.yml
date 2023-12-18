@@ -2,6 +2,8 @@ name: Build & Deploy Codebase
 
 on: 
   push:
+    branches:
+      - 'feature/*'
     branches-ignore:
       - '**'
     paths-ignore:
