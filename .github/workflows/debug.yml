@@ -3,8 +3,11 @@ name: Debug Information
 on:
   push:
     branches:
-      - '**'
-
+      - '*'
+    if: ${{ github.ref == 'refs/heads/main' }}
+    paths-ignore:
+      - '**.md'  # Ignore changes in Markdown files
+    
 env:
   SOME_VALUE: Hello World
   SOME_OTHER_VALUE: Hello World!!!

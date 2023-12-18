@@ -1,0 +1,22 @@
+name: Publish Package
+
+on: 
+  push:
+    branches-ignore:
+      - '**'
+    paths-ignore:
+      - '**.md'  # Ignore changes in Markdown files
+  pull_request:
+    branches:
+      - master
+      - main
+      - 'release/*'
+
+jobs:
+    publish:
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Publish NPM Package
+                run: |
+                    echo publishing package...
+        
