@@ -1,22 +1,17 @@
 name: Publish Package
 
 on: 
-  push:
-    branches-ignore:
-      - '**'
-    paths-ignore:
-      - '**.md'  # Ignore changes in Markdown files
-  pull_request:
-    branches:
-      - master
-      - main
-      - 'release/*'
+  workflow_run:
+    workflows: ["Build & Deploy Codebase"]
+    types:
+      - completed
 
 jobs:
-    publish:
-        runs-on: ubuntu-latest
-        steps:
-            -   name: Publish NPM Package
-                run: |
-                    echo publishing package...
+  publish-package:
+      runs-on: ubuntu-latest
+      needs: [deploy-prod]
+      steps:
+        -   name: Publish NPM Package
+            run: |
+                echo publishing package...
         
