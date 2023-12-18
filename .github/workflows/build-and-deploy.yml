@@ -4,47 +4,15 @@ on:
   push:
     branches-ignore:
       - '**'
+    paths-ignore:
+      - '**.md'  # Ignore changes in Markdown files
   pull_request:
     branches:
       - master
       - main
       - 'release/*'
 
-env:
-  SOME_VALUE: Hello World
-  SOME_OTHER_VALUE: Hello World!!!
-jobs:
-  print-variables:
-    name: Print Variables
-    runs-on: ubuntu-latest
-    steps:
-      - name: Print Variables
-        id: print_variables
-        run: |
-          echo "GITHUB_HEAD_REF: $GITHUB_HEAD_REF"
-          echo "GITHUB_REF: $GITHUB_REF"
-          echo "GITHUB_BASE_REF: $GITHUB_BASE_REF"
-          echo "GITHUB_HEAD_SHA: $GITHUB_HEAD_SHA"
-          echo "GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
-          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
-          echo "GITHUB_WORKFLOW: $GITHUB_WORKFLOW"
-          echo "GITHUB_ACTION: $GITHUB_ACTION"
-          echo "GITHUB_ACTOR: $GITHUB_ACTOR"
-          echo "GITHUB_EVENT_NAME: $GITHUB_EVENT_NAME"
-          echo "GITHUB_EVENT_PATH: $GITHUB_EVENT_PATH"
-          echo "--------------------------------------"
-          echo $SOME_VALUE
-          echo $SOME_OTHER_VALUE
-          branch_name=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}} >> $GITHUB_OUTPUT
-          echo "Branch name: $branch_name"
-          echo "output_name=Helloooo" >> $GITHUB_OUTPUT
-      - name: Get the output
-        run: echo "The output was ${{ steps.print_variables.outputs.output_name }}"
-      - name: Update environment variable
-        run: |
-          echo "SOME_OTHER_VALUE=New Value" >> $GITHUB_ENV
-          echo $SOME_OTHER_VALUE
-          echo ${{ env.SOME_OTHER_VALUE }}
+jobs:  
   branch-check:
     name: Branch Check
     runs-on: ubuntu-latest
