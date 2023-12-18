@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - 'feature/*'
-    branches-ignore:
-      - '**'
     paths-ignore:
       - '**.md'  # Ignore changes in Markdown files
   pull_request:
